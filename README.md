@@ -1,4 +1,13 @@
 # Algorithms
-algorithms
+Algorithms:
+-Dinics Maxflow
+-Dijkstra
+-Kruskal
+-KPM
+-Bellman Ford's
+-Floyd-Wardshall
 
-Hello
+Data structures
+-Fenwick tree
+-Segment tree
+-Ordered set
