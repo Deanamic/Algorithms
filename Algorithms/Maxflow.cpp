@@ -21,8 +21,10 @@ struct Aristas {
 };
 
 VI d, act;
+VVI adj;
+vector<Aristas> E;
 
-bool bfs(int s, int t, VVI& adj, vector<Aristas>& E) { //mira que podemos ir de t a s
+bool bfs(int s, int t) { //mira que podemos ir de t a s
     queue<int> Q;
     d = VI(adj.size(), -1); //iniciamos el vector a -1
     d[t] = 0; //el lugar donde vamos es 0
@@ -40,12 +42,12 @@ bool bfs(int s, int t, VVI& adj, vector<Aristas>& E) { //mira que podemos ir de 
     return d[s] >= 0; //miramos si podemos llegar hasta s
 }
 
-LL dfs(int u, int t, LL bot, VVI& adj, vector<Aristas>& E) {
+LL dfs(int u, int t, LL bot) {
     if (u == t) return bot; //hemos llegado al final
     for (; act[u] < adj[u].size(); ++act[u]) { 
         int e = adj[u][act[u]]; //cogemos los nodos donde puede ir
         if (CAP(u, e) > 0 and d[u] == d[VEI(u, e)] + 1) { //si podemos pasar agua por la direccion escogida y el bfs ha pasado por donde vamos
-            LL inc = dfs(VEI(u, e), t, min(bot, CAP(u, e)), adj, E); //hacemos el dfs de donde hemos llegado, miramos el maxiomo de agua
+            LL inc = dfs(VEI(u, e), t, min(bot, CAP(u, e))); //hacemos el dfs de donde hemos llegado, miramos el maxiomo de agua
             if (inc) {
                 ADD(u, e, inc); //si podemos pasar agua, pasamos agua y actualizamos el valor en el nodo
                 return inc;
@@ -56,12 +58,12 @@ LL dfs(int u, int t, LL bot, VVI& adj, vector<Aristas>& E) {
 }
 
 //S es el Source, t es el Sink
-LL maxflow(int s, int t, VVI& adj, vector<Aristas>& E) { //en la fila del node, guardem no els nodes on conecta, sino quines arestes passan per ella 
+LL maxflow(int s, int t) { //en la fila del node, guardem no els nodes on conecta, sino quines arestes passan per ella 
     for (int i = 0; i < E.size(); ++i) E[i].flow = 0; //inicializamos el flow de todos en 0
     LL flow = 0, bot;
-    while (bfs(s, t, adj, E)) { //hacemos un bfs de source hasta la salida, con una matriz/lista? de adyancentes y vector de nodos
+    while (bfs(s, t)) { //hacemos un bfs de source hasta la salida, con una matriz/lista? de adyancentes y vector de nodos
         act = VI(adj.size(), 0); //el vector act es un vector inicializado en 0, de el numero de nodos
-        while ((bot = dfs(s, t, INF, adj, E))) flow += bot; //sumamos el agua posible
+        while ((bot = dfs(s, t, INF))) flow += bot; //sumamos el agua posible
     } 
     return flow;
 }
