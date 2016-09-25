@@ -88,11 +88,11 @@ void dfs(int u){
 				
 			if(dfs_low[v] > dfs_num[u]){
 				pq.push({min(u,v),max(u,v)});
-				dfs_low[u] = min(dfs_low[u], dfs_num[v]);
+				dfs_low[u] = min(dfs_low[u], dfs_low[v]);
 			}
 		}
 		//already visited => cycle
-		else{
+		else if (v != parent[u]){
 			dfs_low[u] = min(dfs_low[u], dfs_num[v]);
 			
 		}
