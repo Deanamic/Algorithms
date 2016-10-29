@@ -23,7 +23,7 @@ typedef map<int,int>::iterator ITmii;
 */
 
 string a, b;
-string s = a + '&' + b;
+string s = a + '&' + b; //esto lo hacemos para encontrar prefijos de a (en particular todo a) en b asumiendo que ni a ni b contienen &
 vector<int> vi(a.size() + 1);
 
 void KMP{
