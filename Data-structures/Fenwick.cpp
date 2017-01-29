@@ -1,22 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef long long LL;
-typedef vector<LL> VI;
-typedef vector<VI> VVI;
-typedef map<int,int>::iterator ITmii;
-
-#define EPS 1e-9
-#define FOR1(x,y,z) for( int x = y; x < z ; ++x)
-#define FOR(x,y) FOR1(x,0,y)
-#define FOR2(x,y) for(int x = y; x >= 0; --x)
-#define PB push_back
-#define ALL(X) (X).begin(), (X).end()
-#define SORT(X) sort(ALL(X))
-#define SIZE(X) ((int)(X).size())
-
-//------------------------------------------------------------------
-
+using VI = vector<int>;
+using VVI = vector<VI>;
+const int INF = 1e9;
 
 /*Fenwick tree
  * El Fenwick tree es una estructura para calcular y manipular "prefix sums"
@@ -28,23 +15,39 @@ typedef map<int,int>::iterator ITmii;
  * Complejidad O(logn) para consultar y actualizar
  * Complejidad O(N) multiplicar
  */
+ 
+struct Fenwick{
+	int n; //Size of array
+	vector<int> tree;
+	
+	void Build(const vector<int>& v, int m){ //Initializes the tree
+		n = m;
+		tree = vector<int>(m+1,0);
+		for(int i = 0; i < n; ++i){
+			update(i,v[i]);
+		}
+	}
+	
+	int read(int idx){ //Gives the sum [1,idx]
+	    int sum = 0;
+		idx++;
+	    while (idx > 0){
+	        sum += tree[idx];
+	        idx -= (idx & -idx);
+	    }
+	    return sum;
+	}
 
-int read(int idx){ //da la suma de frecuencias de [1,a]
-    int sum = 0;
-    while (idx > 0){
-        sum += tree[idx];
-        idx -= (idx & -idx);
-    }
-    return sum;
-}
+	void update(int k ,int val){ //Increases the k-th value
+		k++;
+	    while (k <= n){
+	        tree[k] += val;
+	        k += (k & -k);
+	    }
+	}
 
-
-void update(int idx ,int val, int n){ //aumenta del valor k-esimo
-    while (idx <= n){
-        tree[idx] += val;
-        idx += (idx & -idx);
-    }
-}
-
-//para construirlo haremos un for(i,n) update(i,v[i],n)
-
+	void scale(int c){ //multiplies all numbers by a c factor
+    	for (int i = 1 ; i <= n ; i++)
+        	tree[i] = tree[i] * c;
+	}
+};
