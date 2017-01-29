@@ -53,7 +53,7 @@ void updateinterval (int a, int b, int x, int y, int diff, int node) { // prepar
     updateinterval (a, b, x, (x+y)/2, diff, 2*node);        // si encara no ha fet res => esta inclos parcialment => actualitzo
     updateinterval (a, b, (x+y)/2 + 1, y, diff, 2*node + 1);// les branques i despres el node
     seg[node] = max (seg[2*node], seg[2*node + 1]);
-    
+
 }
 int main() {
 }
