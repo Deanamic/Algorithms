@@ -1,57 +1,59 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define FOR1(x,y,z) for( int x = y; x < z ; ++x)
-#define FOR(x,y) FOR1(x,0,y)
-#define endl '\n'
-#define mp(x,y) make_pair(x,y)
-#define SIZE(X) ((int)(X).size())
-typedef pair<int, int> II;
-typedef vector<II> VII;
-typedef vector<VII> VVII;
-#define INF int(1e9)
+using VI = vector<int>;
+using VVI = vector<VI>;
+const int INF = 1e9;
 
 /*
- *dijkstra, busca el camino minimo en un grafo con pesos y dirigidos
- *complexidad O(E+VlogV) 
+ *Dijkstra, Fins the single source shortest path in O(E+VlogV)
+ * Graph must have positive edges or else it will fail.
+ * In such case use Bellman Ford's Algorithm
 */
 
-struct compare{ //estruct para que el priority queue ordene de pesos pequeños a mayores
-	bool operator()(II a, II b){
-		return a.second > b.second;
+
+struct Node{
+	int node;
+	int weight;
+	bool operator< (const Node& n) const{
+		return weight > n.weight;
 	}
 };
 
-
 int main(){
-	int n,m;
-	cin >> n >> m; //n es el numero de nodos, m el numero de caminos dirigidos
-	VVII v(n); //creamos una lista de adyacencia con el pair <nodo que conecta, peso>
-	FOR(i,m){
-		int origen, destino,peso;
-		cin >> origen >> destino >> peso;
-		//--origen; --destino; si estuviese indexado a 1  
-		v[origen].PB(mp(destino,peso)); //añadimos este camino a la lista
+	int n; //number of nodes;
+	int m; //number of edges;
+	cin >> n >> m;
+	vector<vector<Node> > v(n);
+	for(int i = 0; i < m; ++i){
+		int a, b, cost;
+		cin >> a >> b >> cost;
+		v[a].push_back({b,cost});
+		v[b].push_back({a,cost}); //supposing its directed
 	}
-	VI d(n,INF); //iniciamos un vector con caminos, la distancia es infinita si no hay arestas
-	d[0] = 0; //ir al mismo sitio cuesta 0
-	priority_queue <II,VII,compare> pq; //creamos la priority_queue ordenado de menos peso a mayor peso
-	pq.push(mp(0,0)); //empezamos desde el 0
-	while (not pq.empty()){ //mientras la cola no este vacia, puede haber un camino mas optimo
-		II top = pq.top(); pq.pop(); //sacamos siempre el camino con menor valor
-		int origen = top.first;
-		FOR(i,SIZE(v[origen])){ //miramos que caminos podemos hacer desde este sitio
-			int to = v[origen][i].first, peso = v[origen][i].second; //guardamos a donde vamos, y el peso de ese camino
-			if (d[to] > d[origen] + peso){ //si podemos ir a una aresta, con menor ESTRICTO peso pasando por el nodo origen, cambiamos su peso, y reconsideramos el camino optimo 
-				//sabiendo que existe una aresta tal que esta mas cerca de el inicio
-				d[to] = d[origen] + peso; //asignamos el nuevo minimo
-				pq.push(mp(to,d[to])); //metemos al vector esta nueva forma de llegar para recalcular
-			}
+	priority_queue<Node> pq;
+	    /* The priority queue will contain all the distances to nodes
+	    * the first element will be the one which is closest, as all the weights are
+	    * positive, this distance cannot be made shorter, hence after we check all posible
+	    * edges to take from this node, we will check for the next closest node
+	    * This is the VlogV factor in complexity
+	    */
+	    
+	pq.push({0,0}); //we suppose we want to compute the sssp from node 0
+	vector<int> d(n,INF);
+	d[0] = 0;
+	while(!pq.empty()){
+		Node n = pq.top(); pq.pop();
+		if(d[n.node] == n.weight){
+    		for(int i = 0 ; i < v[n.node].size(); ++i){
+    		    /* We check all possible edges here
+    		    * This is the E factor in complexity
+    		    */
+    			if(d[v[n.node][i].node] > d[n.node] + v[n.node][i].weight){
+    				d[v[n.node][i].node] = d[n.node] + v[n.node][i].weight;
+    				pq.push({v[n.node][i].node, d[v[n.node][i].node]});
+    			}
+    		}
 		}
-	} //cuando la cola se vacie significa que no existe ningun camino mas corto
-	FOR1(i,1,n){ //imprimimos el camino minimo a cada sitio
-		if (d[i] == int(1e9)) cout << "no";
-		else cout << d[i];
-		cout << endl;
 	}
 }
