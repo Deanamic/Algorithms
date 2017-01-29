@@ -1,59 +1,84 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-int v[1000000], seg[4000000];                       // v es l'array base i seg el vector segment tree;
-int n;
-int lazy[4000000];                                  // array on guardo els canvis que encara s'han de fer
+/* Segment Tree/ Interval Tree
+ * Stores information in a Heap
+ * Modification, lookup in O(logn)
+ * Provides Tools to update intervals
+ * All intervals are [ , )
+*/
 
-void build(int x, int y, int node) {                // constructor: x, y = interval en el que estic; node = node en el que estic
-    if (x == y) seg[node] = v[x];                   // si x == y estic a una fulla => en aquest node el valor es el de l'array base
-    else {
-        build (x, (x+y)/2, 2*node);                 // contrueixo el subarbre que surt d'aquest node i poso a seg[node] el maxim del subarbre
-        build ((x+y)/2 + 1, y, 2*node + 1);
-        seg[node] = max (seg[2*node], seg[2*node + 1]);
-    }
-}
+struct LazySegmentTree{
+    vector<int> Seg;
+    vector<int> lazy;
+    int n;
 
-int query(int a, int b, int x, int y, int node) {   // buscador de maxim: a i b es l'interval que busco; x i y es en el que estic
-    if (lazy[node] != 0) {
-        seg[node] += lazy[node];
-        if (x != y) {
-            lazy[2*node] += lazy[node];             // Lazy propagation
-            lazy[2*node + 1] += lazy[node];
+    void build(vector<int>& v, int m){
+		Seg = lazy = vector<int> (4*n,0);
+		n = m;
+		build(v, 1, 0, n);
+	}
+	void build( vector<int>& v, int id,int left, int right){
+		if(left + 1 >= right){
+			Seg[id] = v[left];
+			return;
+		}
+		int mid = (left + right)/2;
+		build(v, id * 2, left, mid);
+		build(v, id * 2 + 1, mid, right);
+		Seg[id] = Seg[id*2] + Seg[id*2 + 1];
+	}
+
+    int find(int x, int y){
+		return find(x, y, 1, 0, n);
+	}
+	int find(int x, int y, int id, int left, int right){
+        if (lazy[id] != 0) {
+            Seg[id] +=  (right-left)*lazy[id];
+            if (x + 1 < y) {
+                lazy[2*id] += lazy[id];             // Lazy propagation
+                lazy[2*id + 1] += lazy[id];
+            }
+            lazy[id] = 0;
         }
-        lazy[node] = 0;
-    }
-    if (a <= x and b >= y) return seg[node];        // si en el que estic esta inclos en el que busco, en retorno el maxim
-    if (b < x or a > y) return 0;                   // si en el que estic es disjunt del que busco, retorno 0
-    return max (query(a, b, x, (x+y)/2, 2*node), query(a, b, (x+y)/2 + 1, y, 2*node+1)); // si no es cap de les interiors (vol dir que esta mig inclos,
-    // crido al subarbre
-}
+		if(left >= y or right <= x){
+			return 0;
+		}
+		if(left >= x and right <= y){
+			return Seg[id];
+		}
+		int mid = (left + right)/2;
+		return find(x, y, 2*id, left, mid) + find(x, y, 2*id + 1, mid, right);
+	}
 
-void updateinterval (int a, int b, int x, int y, int diff, int node) { // preparador lazy: a i b es el que busco, x i y es en el que estic
-    if (lazy[node] != 0) {
-        seg[node] += lazy[node];
-        if (x != y) {
-            lazy[2*node] += lazy[node];
-            lazy[2*node + 1] += lazy[node];
-        }
-        lazy[node] = 0;
-    }
-    if (a <= x and y<= b) {                  // si en el que estic esta inclos en el que busco, l'actualitzo i afegeixo lazy als fills
-        seg[node] += diff;
-        if (x != y) {
-            lazy[2*node] += diff;
-            lazy[2*node + 1] += diff;
-        }
-        return;
-    }
-    if (b < x or a > y) return;             // si son disjunts no faig res
-    updateinterval (a, b, x, (x+y)/2, diff, 2*node);        // si encara no ha fet res => esta inclos parcialment => actualitzo
-    updateinterval (a, b, (x+y)/2 + 1, y, diff, 2*node + 1);// les branques i despres el node
-    seg[node] = max (seg[2*node], seg[2*node + 1]);
+    int updateinterval(int p, int x, int y){
+		updateinterval(p, 1, x, y, 0, n);
+	}
 
-}
-int main() {
-}
+    void updateinterval (int p, int id, int x, int y, int left, int right) {
+        if (lazy[id] != 0) {
+            Seg[id] +=  (right-left)*lazy[id];
+            if (x + 1 < y) {
+                lazy[2*id] += lazy[id];
+                lazy[2*id + 1] += lazy[id];
+            }
+            lazy[id] = 0;
+        }
+        if(left >= y or right <= x){
+			return;
+		}
+		if(left >= x and right <= y){
+            Seg[id] +=  (right-left)*p;
+            if (x + 1 < y)  {
+                lazy[2*id] += p;
+                lazy[2*id + 1] += p;
+            }
+            return;
+        }
+        int mid = (left + right)/2;
+        updateinterval (p, 2*id, x, y, left, mid);
+        updateinterval (p, 2*id, x, y, mid, right);
+        Seg[id] = Seg[2*id] + Seg[2*id + 1];
+
+    }
+};

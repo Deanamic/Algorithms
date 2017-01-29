@@ -9,13 +9,13 @@ using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statisti
 
 #define POS(X,Y) *X.find_by_order(Y)
 #define ORD(X,Y) X.order_of_key(Y)
-/* 
+/*
  * tree actua como un set pero con dos funciones extra
  * find_by_order() que devuelve un iterador al elemento k-esimo
- * 
+ *
  * order_of_key() que devuelve el numero de elementos mas pequeños
  * estrictos que X
- * 
+ *
  * Complejidad:
  * 	-insert 				O(logn)
  * 	-erase 					O(logn)
@@ -23,6 +23,3 @@ using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statisti
  * 	-orderofkey	 			O(logn)
  * 	-iterate thourgh set 	O(n)
 */
-
-int main(){
-}
