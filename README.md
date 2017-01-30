@@ -1,5 +1,5 @@
 # Algorithms
-List of algorithms aimed at competitive Programming  
+List of algorithms aimed at Competitive Programming  
 
 Algorithms:  
 - Maxflow: Dinics  
