@@ -12,8 +12,8 @@ struct SegmentTree{
 	int n;
 
 	void build(vector<int>& v, int m){
-		Seg = vector<int> (4*n);
 		n = m;
+        Seg = vector<int> (4*n,0);
 		build(v, 1, 0, n);
 	}
 	void build( vector<int>& v, int id,int left, int right){
@@ -41,7 +41,7 @@ struct SegmentTree{
 		return find(x, y, 2*id, left, mid) + find(x, y, 2*id + 1, mid, right);
 	}
 
-	int update(int p, int new_value){
+	void update(int p, int new_value){
 		update(p, new_value, 1, 0, n);
 	}
 	void update(int p, int new_value, int id, int left, int right){

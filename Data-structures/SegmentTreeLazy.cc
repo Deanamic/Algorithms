@@ -14,8 +14,8 @@ struct LazySegmentTree{
     int n;
 
     void build(vector<int>& v, int m){
-		Seg = lazy = vector<int> (4*n,0);
 		n = m;
+        Seg = lazy = vector<int> (4*n,0);
 		build(v, 1, 0, n);
 	}
 	void build( vector<int>& v, int id,int left, int right){
