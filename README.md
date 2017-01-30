@@ -13,8 +13,8 @@ Algorithms:
 - Graphs: [Finding articulation points and bridges](https://github.com/Deanamic/Algorithms/blob/master/Algorithms/ArticulationandBridges.cc)  
 
 Data structures:  
-- [Fenwick tree]  
-- [Segment tree]  
-- [Segment Tree with Lazy Propagation]  
-- [Persistent SegmentTree]
-- [Ordered set]  
+- [Fenwick tree](https://github.com/Deanamic/Algorithms/blob/master/Data-structures/Fenwick.cc)
+- [Segment tree](https://github.com/Deanamic/Algorithms/blob/master/Data-structures/Segment_Tree.cc)  
+- [Segment Tree with Lazy Propagation](https://github.com/Deanamic/Algorithms/blob/master/Data-structures/SegmentTreeLazy.cc)  
+- [Persistent SegmentTree](https://github.com/Deanamic/Algorithms/blob/master/Data-structures/Persistent_SegmentTree.cc)
+- [Ordered set](https://github.com/Deanamic/Algorithms/blob/master/Data-structures/ordered_set.cc)  
