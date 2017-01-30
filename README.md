@@ -1,8 +1,8 @@
 # Algorithms
-List of algorithms aimed at Competitive Programming  
+List of algorithms aimed at competitive Programming  
 
 Algorithms:  
-- Maxflow: (Dinics)[https://github.com/Deanamic/Algorithms]  
+- Maxflow: [Dinics](https://github.com/Deanamic/Algorithms/blob/master/Algorithms/ArticulationandBridges.cc)  
 - SSSP: Dijkstra, Bellman Ford's  
 - APSP : Floyd Warshall
 - Minimum spanning tree: Kruskal  
