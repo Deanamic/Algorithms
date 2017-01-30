@@ -1,10 +1,10 @@
 # Algorithms
 List of algorithms aimed at competitive Programming  
-  
+
 Algorithms:  
 - Maxflow: Dinics  
 - SSSP: Dijkstra, Bellman Ford's  
-- APSP : FLoyd Warshall
+- APSP : Floyd Warshall
 - Minimum spanning tree: Kruskal  
 - String Matching: KMP  
 - Geometry : Convex Hull
@@ -15,4 +15,4 @@ Data structures:
 - Segment tree  
 - Segment Tree with Lazy Propagation
 - Ordered set  
-
+- Persistent SegmentTree
