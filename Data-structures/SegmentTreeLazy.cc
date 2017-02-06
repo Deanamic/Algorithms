@@ -77,7 +77,7 @@ struct LazySegmentTree{
         }
         int mid = (left + right)/2;
         updateinterval (p, 2*id, x, y, left, mid);
-        updateinterval (p, 2*id, x, y, mid, right);
+        updateinterval (p, 2*id + 1, x, y, mid, right);
         Seg[id] = Seg[2*id] + Seg[2*id + 1];
 
     }
