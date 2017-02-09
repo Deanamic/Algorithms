@@ -2,8 +2,8 @@
 using namespace std;
 
 /*
- *  Sparse table is an algorithm which uses a table to store values of the previous
- *  2^i for 0 <= i <= MAXLOG
+ *  Sparse table is an algorithm which uses a table to store values of the answer
+ *  to the query in intervals of length 2^i for 0 <= i <= MAXLOG
  *  It is specially useful for RMQ (O(nlogn) preprocess and O(1) queries)
  *  or LCA. This code will use the RMQ algorithm to process the range minimum query
  *  ! Sparse table doesnt allow for modifications
