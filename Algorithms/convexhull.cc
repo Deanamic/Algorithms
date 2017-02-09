@@ -8,7 +8,7 @@ using namespace std;
  */
 
 vector<punto> H;
-vector<punto> P
+vector<punto> P;
 
 struct punto {
 	double x, y;

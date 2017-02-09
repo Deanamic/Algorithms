@@ -19,7 +19,7 @@ typedef map<int,int>::iterator ITmii;
 
 //------------------------------------------------------------------
 /*
- * Bellman-Ford es un algoritmo de SSSP que funciona en presencia de 
+ * Bellman-Ford es un algoritmo de SSSP que funciona en presencia de
  * pesos negativos
 */
 
@@ -27,6 +27,7 @@ typedef map<int,int>::iterator ITmii;
  * tiene una complejidad de O(VE) con lista de adyancencia
  * O(V^3) con matriz de adyacencia
 */
+
 VI dist;
 struct edge{
 	int to,weight;
