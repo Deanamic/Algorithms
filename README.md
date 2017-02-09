@@ -11,6 +11,7 @@ Algorithms:
 - String Matching: [KMP](https://github.com/Deanamic/Algorithms/blob/master/Algorithms/KMP.cc)  
 - Geometry : [Convex Hull](https://github.com/Deanamic/Algorithms/blob/master/Algorithms/convexhull.cc)  
 - Graphs: [Finding articulation points and bridges](https://github.com/Deanamic/Algorithms/blob/master/Algorithms/ArticulationandBridges.cc)  
+- Sparse Table: [Implementation of RMQ using Sparse Table](https://github.com/Deanamic/Algorithms/blob/master/Algorithms/SparseTableRMQ.cc)  
 
 Data structures:  
 - [Fenwick tree](https://github.com/Deanamic/Algorithms/blob/master/Data-structures/Fenwick.cc)
