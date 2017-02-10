@@ -15,6 +15,7 @@ struct SparseTable {
     vector<int> v;
     int N;
     int MAXLOG = 0;
+
     void build(int n){
         N = n;
         while ((1 << MAXLOG) <= N) ++MAXLOG;
@@ -46,7 +47,8 @@ struct SparseTable {
         // we simply take segments [i , i + 2^j-1) and [i + 2^j-1, i + 2^j)
     }
 
-// query range [l,r]
+
+    // query range [l,r]
     int query(int l, int r){
         int LOG = P[r-l+1];
 
@@ -56,6 +58,42 @@ struct SparseTable {
         // the range or [l,r]
         // Which has been preprocessed before
         return min(v[ST[l][LOG]], v[ST[r - (1 << LOG) + 1][LOG]]);
+
+    }
+
+    //Overload if we do not one to store v in the struct
+    void build(int n, const vector<int>& V){
+        N = n;
+        while ((1 << MAXLOG) <= N) ++MAXLOG;
+        ST = vector<vector<int> > (N, vector<int> (MAXLOG));
+        P = vector<int> (N+1);
+        int LOG = 0;
+        for(int i = 1; i < N + 1; ++i){
+            P[i] = ((1<<LOG) > i ?  LOG-1 : ++LOG-1);
+        }
+        // Dynamic Sparse table building
+        for(int i = 0; i < N; ++i) ST[i][0] = i;
+        for (int j = 1; j < MAXLOG; ++j) {
+            for (int i = 0; i + (1 << j) - 1 < N; ++i) {
+                if (V[ST[i][j - 1]] < V[ST[i + (1 << (j - 1))][j - 1]])
+                     ST[i][j] = ST[i][j - 1];
+                else
+                     ST[i][j] = ST[i + (1 << (j - 1))][j - 1];
+            }
+        }
+    }
+
+
+
+    int query(int l, int r, const vector<int>& V){
+        int LOG = P[r-l+1];
+
+        // we need an interval range such the we can cover [l,r] with
+        // [l , l + 2^LOG) and [r - 2^LOG + 1, r+1)
+        // hence we need the maximum LOG, such that 2^LOG is smaller than
+        // the range or [l,r]
+        // Which has been preprocessed before
+        return min(V[ST[l][LOG]], V[ST[r - (1 << LOG) + 1][LOG]]);
 
     }
 };
