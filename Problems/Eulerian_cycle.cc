@@ -21,18 +21,20 @@ struct edge{
 
 vector<edge> E;
 vector<vector<int> > adj; //adj stores the index in E
+vector<int> nxt;
 vector<int> cycle;
-int p = m;
+int p;
 
 void find_cycle(int u){
-    while(next[u] <= adj[u].size())
-        if(!E[next[u]].used){
-            E[next[u]].used = 1;
-            int to = E[next[u]].u ^ E[next[u]].v ^ u;
-            next[u]++;
-            find_cycle(adj[u][to]);
+    while(nxt[u] < adj[u].size()){
+        int go = adj[u][nxt[u]++];
+        if(!E[go].used){
+            E[go].used = 1;
+            int to = (E[go].u ^ E[go].v ^ u);
+            find_cycle(to);
         }
-    cycle[p--] = u;
+    }
+    cycle[--p] = u;
 }
 
 //directed graph
