@@ -11,6 +11,31 @@ There exists an Eulerian cycle iff all vertices have the same number of entering
 There exists an Eulerian tour iff all vertices but 2 have the same entering and exiting edges and the other 2 have a |difference| of 1.
 
 */
+
+//undirected graph
+
+struct edge{
+    int u, v;
+    bool used;
+};
+
+vector<edge> E;
+vector<vector<int> > adj; //adj stores the index in E
+vector<int> cycle;
+int p = m;
+
+void find_cycle(int u){
+    while(next[u] <= adj[u].size())
+        if(!E[next[u]].used){
+            E[next[u]].used = 1;
+            int to = E[next[u]].u ^ E[next[u]].v ^ u;
+            next[u]++;
+            find_cycle(adj[u][to]);
+        }
+    cycle[p--] = u;
+}
+
+//directed graph
 vector<int> next; //stores last visited vertex index
 vector<vector<int>> adj(n);
 vector<int> cycle(m);
