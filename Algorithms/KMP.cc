@@ -26,10 +26,11 @@ string a, b;
 string s = a + '&' + b; //esto lo hacemos para encontrar prefijos de a (en particular todo a) en b asumiendo que ni a ni b contienen &
 vector<int> vi(a.size() + 1);
 
-void KMP{
+void KMP(){
 	vi[0] = -1;
 	for(int i = 0; i < c-1; ++i){
 		int j = vi[i];
 		while(j > -1 and s[j] != s[i]) j = vi[j]; 
 		vi[i + 1] = j + 1;
+	}
 }
