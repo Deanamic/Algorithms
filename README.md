@@ -16,7 +16,7 @@ Algorithms:
 - Sparse Table: [Implementation of RMQ using Sparse Table](Algorithms/SparseTableRMQ.cc)  
 - LCA:  
   - [Binary Lifting](Algorithms/BinaryLifting.cc) 
-  - [RMQ + Eulerian Tour]((Algorithms/LCA.cc)  
+  - [RMQ + Eulerian Tour](Algorithms/LCA.cc)  
   
 
 Data structures:  
