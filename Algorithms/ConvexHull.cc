@@ -7,15 +7,16 @@ using namespace std;
  * Complejidad O(nlogn) : O(nlogn) ordenar, O(n) crear la convex hull
  */
 
-vector<punto> H;
-vector<punto> P;
-
 struct punto {
 	double x, y;
 	bool operator <(const punto &p) const {
 		return (x < p.x or (x == p.x and y < p.y));
 	}
 };
+
+vector<punto> H;
+vector<punto> P;
+int half;
 
 // Producto vectorial
 // mayor que 0 si el giro es horario, igual 0 si es colinear,
@@ -38,7 +39,7 @@ void convex_hull() {
 		while (k >= 2 && cross(H[k-2], H[k-1], P[i]) <= 0) k--;
 		H[k++] = P[i];
 	}
-
+	half = k;
 	// construimos la convexhull superior
 	for (int i = n-2, t = k+1; i >= 0; i--) {
 		while (k >= t && cross(H[k-2], H[k-1], P[i]) <= 0) k--;
@@ -63,7 +64,7 @@ int query(punto p){ //checks if a point lies within the convexhull O(logn)
 		if(H[m].x <= p.x) r = m;
 		else l = m;
 	}
-	if(H[l].x < p.x or l == H.size()-1) return 0;
+	if(H[l].x < p.x or l == (int)H.size()-1) return 0;
 	if(cross(H[l], p, H[l+1]) <= 0) return 1;
 	return 0;
 }

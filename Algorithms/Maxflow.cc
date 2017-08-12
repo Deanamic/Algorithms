@@ -1,12 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef long long LL;
+typedef long long ll;
 typedef vector<int> VI;
 typedef vector<VI> VVI;
-const LL INF = 1000000000000000000LL;
+const ll INF = (long long)1000000000000000000;
 /*
- *maxflow, devuelve el maximo flujo que puede pasar por un grafo 
+ *maxflow, devuelve el maximo flujo que puede pasar por un grafo
  *dirigido con pesos
  *complejidad O(V^2E)
 */

@@ -16,6 +16,7 @@ using namespace std;
  *          be answered with O(n) preprocessing
  */
 struct SparseTable {
+    //ST saves the index, not the value
     vector<vector<int> > ST;
     vector<int > P;
     int N;
@@ -28,7 +29,8 @@ struct SparseTable {
         P = vector<int> (N + 1);
         int LOG = 0;
         for (int i = 1; i < N + 1; ++i) {
-            P[i] = ((1 << LOG) > i ? LOG - 1 : ++LOG - 1);
+            if(1 << (LOG+1) <= i) P[i] = ++LOG;
+            else P[i] = LOG;
         }
         // Dynamic Sparse table building
         for (int i = 0; i < N; ++i) {
@@ -42,7 +44,7 @@ struct SparseTable {
                     ST[i][j] = ST[i + (1 << (j - 1))][j - 1];
             }
         }
-    } // build
+    }
 
     int query(int l, int r, const vector<int>& V){
         int LOG = P[r - l + 1];
@@ -70,14 +72,14 @@ struct Tree {
     // Note that Eulerian_tour and RMQ_reduction will have size 2*N -1
     // We will root the tree at 0
 
-    void Eulerian_dfs(int p, int node, int depth){
-        if (Ocurrence[node] == -1) Ocurrence[node] = Eulerian_tour.size();
-        Eulerian_tour.push_back(node);
+    void Eulerian_dfs(int p, int u, int depth){
+        if (Ocurrence[u] == -1) Ocurrence[u] = Eulerian_tour.size();
+        Eulerian_tour.push_back(u);
         RMQ_reduction.push_back(depth);
-        for (int i = 0; i < adj[node].size(); ++i) {
-            if (adj[node][i] != p) {
-                Eulerian_dfs(node, adj[node][i], depth + 1);
-                Eulerian_tour.push_back(node);
+        for (int v : adj[u]) {
+            if (v != p) {
+                Eulerian_dfs(u, v, depth + 1);
+                Eulerian_tour.push_back(u);
                 RMQ_reduction.push_back(depth);
             }
         }

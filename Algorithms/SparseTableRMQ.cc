@@ -83,8 +83,6 @@ struct SparseTable {
         }
     }
 
-
-
     int query(int l, int r, const vector<int>& V){
         int LOG = P[r-l+1];
 

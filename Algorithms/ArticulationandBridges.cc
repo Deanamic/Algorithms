@@ -1,9 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef vector<int> VI;
-typedef vector<VI> VVI;
-
 /*
  * Given a undirected graph with n vertices and m edges
  * we are asked to find:
@@ -12,96 +9,64 @@ typedef vector<VI> VVI;
  * Our algorithm will run in O(V+E)
 */
 
-VI dfs_num; //when a vertex is visited for the first time
-VI dfs_low; //stores the lowest value dfs_num reachable from the subtree
-VI articulation; //stores articulation points
-VI parent;
-VVI adj; //adjacency matrix
-/*we can see that we will only update dfs_low to a lower value if there
- *is a cycle (backtracks to an earlier value)
- */
-
- /*
-  * given u,v neighbours
-  * if dfs_low(v) >= dfs_num(u)
-  * it means there is no backedge from v to a parent of u(cycle)
-  * to go its parent
-  * you must go through u, which makes it an articulation point
-  */
-
-  //there is a special case if we start the dfs with an
-  //articulation point
-
-  /*
-   * given u,v neighbours
-   * if dfs_low(v) > dfs_num(u) then edge u,v is a bridge
-   * i.e. there is no dfs subtree from v that return to u
-   */
-
-
- int cnt = 0;
- int dfsroot;
- int rootchildren;
- // this will count when we arrive in the dfs
-
-
-//https://jutge.org/problems/P37339_en
-//find bridges and print in ascending order
-struct Edge{
-	int u;
-	int v;
-	//int weight;
-	bool operator< (const Edge& a) const{
-		if(a.u != u) return a.v < v;
-		return a.u < u;
-	}
-};
-
-priority_queue<Edge> pq;
+vector<int> dfs_num; //when a vertex is visited for the first time
+vector<int> dfs_low; //stores the lowest value dfs_num reachable from the subtree
+vector<int> articulation; //stores articulation points
+vector<int> bridge;
+vector<int> parent;
+vector<vector<int>> adj;
+vector<pair<int,int>> E;
+int cnt = 0;
+int dfsroot;
+int rootchildren;
 
 void dfs(int u){
 	dfs_num[u] = dfs_low[u] = cnt++;
-	for(int i = 0; i < adj[u].size(); ++i){
-		int v = adj[u][i];
-		if(u == dfsroot) rootchildren++; //special case it must have more than 1 children
+	for(int t : adj[u]){
+        int v = E[t].first ^ E[t].second  ^ u;
 
 		//not visited
 		if( dfs_num[v] == -1){
+            if(u == dfsroot) rootchildren++; //special case it must have more than 1 children
 			parent[v] = u; //we assign its parent to avoid cycles a-b-a
 			dfs(v);
+            dfs_low[u] = min(dfs_low[u], dfs_low[v]);
 
+            //after we have performed the dfs from v if the lowest it can go is still larger than
+            //the time we went in, it must mean it can't visit any edge before us => we must be a articulation point
 			if(dfs_low[v] >= dfs_num[u]){
-				articulation[u] = true;
+				articulation[u] = 1;
 			}
 
+            //if it is strictly larger, which means it can't even visit us, the edge we are passing must be a bridge.
 			if(dfs_low[v] > dfs_num[u]){
-				pq.push({min(u,v),max(u,v)});
-				dfs_low[u] = min(dfs_low[u], dfs_low[v]);
+				bridge[t] = 1;
 			}
+
 		}
 		//already visited => cycle
 		else if (v != parent[u]){
 			dfs_low[u] = min(dfs_low[u], dfs_num[v]);
-
 		}
 	}
-
 }
 
 int main(){
 	int n,m;
 	cin >> n >> m;
-	adj = VVI(n);
-	dfs_low = dfs_num = parent = VI(n,-1);
-	articulation = VI(n,0);
+	adj = vector<vector<int>>(n);
+	dfs_low = dfs_num = parent = vector<int>(n,-1);
+	articulation = vector<int>(n,0);
+    bridge = vector<int>(m,0);
+    E = vector<pair<int,int>>(m);
 	for(int i = 0; i < m; ++i){
 		int x,y;
 		cin >> x >> y;
-		adj[x].push_back(y);
-		adj[y].push_back(x);
+        E[i] = {x,y};
+		adj[x].push_back(i);
+		adj[y].push_back(i);
 	}
 	for (int i = 0; i < n; ++i){
-
 		if (dfs_num[i] == -1) {
 			dfsroot = i;
 			rootchildren = 0;

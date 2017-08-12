@@ -36,7 +36,7 @@ int go(int p, char c){
         if(p == 0 and TRIE[p].next0 == 0) return g[s][p] = 0;
         return g[s][p] = go(suf(p), c);
     }
-    if(s == 1){
+    else {
         if(TRIE[p].next1 != 0) return g[s][p] = TRIE[p].next1;
         if(p == 0 and TRIE[p].next1 == 0) return g[s][p] = 0;
         return g[s][p] = go(suf(p), c);
@@ -64,11 +64,11 @@ bool dfs_cycle(int x, int p){
 
 void addTRIE(string& s){
     int pos = 0;
-    for(int i = 0; i < s.size(); ++i){
+    for(int i = 0; i < (int)s.size(); ++i){
         if(s[i] == '0'){
             if(TRIE[pos].next0 == 0){
                 TRIE.push_back({s[i],0,0,pos,0});
-                TRIE[pos].next0 = pos = CUR++;
+                TRIE[pos].next0 = (pos = CUR++);
             }
             else{
                 pos = TRIE[pos].next0;
@@ -116,7 +116,7 @@ int main(){
 	    }
 	}
 	else v[p] = 1;
-    } 
+    }
     if(dfs_cycle(0,-1)) cout << "YES" << endl;
     else cout << "NO" << endl;
 }
