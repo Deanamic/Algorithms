@@ -10,9 +10,10 @@ Algorithms:
 - Minimum spanning tree: [Kruskal](Algorithms/MinimumSpanningTree.cc)  
 - String Matching:
   - [KMP](Algorithms/KMP.cc)  
+  - [Z](Algorithms/Z.cc)  
   - [Aho-Corasick](Algorithms/Aho-Corasick.cc)
 - Geometry : [Convex Hull](Algorithms/ConvexHull.cc)  
-- Graphs: 
+- Graphs:
   - [Finding articulation points and bridges](Algorithms/ArticulationandBridges.cc)  
   - [Heavy Light Decomposition](Algorithms/HeavyLightDecomposition.cc)  
 - Sparse Table: [Implementation of RMQ using Sparse Table](Algorithms/SparseTableRMQ.cc)  
