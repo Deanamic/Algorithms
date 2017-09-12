@@ -21,13 +21,14 @@ struct Fenwick{
 	vector<int> tree;
 	
 	void Build(const vector<int>& v, int m){ //Initializes the tree
-		n = m;
-		tree = vector<int>(m+1,0);
-		for(int i = 0; i < n; ++i){
+		n = m+1;
+		tree = vector<int>(n,0);
+		for(int i = 0; i < m; ++i){
 			update(i,v[i]);
 		}
 	}
 	
+	//all queries are 0-indexed
 	int read(int idx){ //Gives the sum [1,idx]
 	    int sum = 0;
 		idx++;
@@ -38,16 +39,16 @@ struct Fenwick{
 	    return sum;
 	}
 
-	void update(int k ,int val){ //Increases the k-th value
-		k++;
-	    while (k <= n){
-	        tree[k] += val;
-	        k += (k & -k);
+	void update(int idx,int val){ //Increases the k-th value
+		idx++;
+	    while (idx < n){
+	        tree[idx] += val;
+	        idx += (idx & -idx);
 	    }
 	}
 
 	void scale(int c){ //multiplies all numbers by a c factor
-    	for (int i = 1 ; i <= n ; i++)
+    	for (int i = 1 ; i < n ; i++)
         	tree[i] = tree[i] * c;
 	}
 };
