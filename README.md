@@ -12,7 +12,9 @@ Algorithms:
   - [KMP](Algorithms/KMP.cc)  
   - [Aho-Corasick](Algorithms/Aho-Corasick.cc)
 - Geometry : [Convex Hull](Algorithms/ConvexHull.cc)  
-- Graphs: [Finding articulation points and bridges](Algorithms/ArticulationandBridges.cc)  
+- Graphs: 
+  - [Finding articulation points and bridges](Algorithms/ArticulationandBridges.cc)  
+  - [Heavy Light Decomposition](Algorithms/HeavyLightDecomposition.cc)  
 - Sparse Table: [Implementation of RMQ using Sparse Table](Algorithms/SparseTableRMQ.cc)  
 - LCA:  
   - [Binary Lifting](Algorithms/BinaryLifting.cc)
