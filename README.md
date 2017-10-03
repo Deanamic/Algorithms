@@ -25,8 +25,9 @@ Algorithms:
 
 Data structures:  
 - [Fenwick tree](Data-structures/Fenwick.cc)
-- [Segment tree](Data-structures/Segment_Tree.cc)  
+- [Segment tree](Data-structures/SegmentTree.cc)  
 - [Segment Tree with Lazy Propagation](Data-structures/SegmentTreeLazy.cc)  
-- [Persistent SegmentTree](Data-structures/Persistent_SegmentTree.cc)
-- [Ordered set](Data-structures/ordered_set.cc)  
+- [Persistent SegmentTree](Data-structures/PersistentSegmentTree.cc)
+- [Ordered set](Data-structures/OrderedSet.cc)  
 - [Treap](Data-structures/Treap.cc)  
+- [Line Container](Data-structures/LineContainer.cc)
