@@ -22,6 +22,9 @@ Algorithms:
   - [RMQ + Eulerian Tour](Algorithms/LCA.cc)  
 - FFT:
   - [FFT](Algorithms/FFT.cc)  
+- Gauss
+  - [Gaussian Elimination](Algorithms/Gauss.cc)  
+  - [Gaussian Elimination mod Prime](Algorithms/GaussmodP.cc)  
 
 Data structures:  
 - [Fenwick tree](Data-structures/Fenwick.cc)
