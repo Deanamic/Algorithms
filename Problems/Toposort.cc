@@ -19,8 +19,8 @@ int pos = n;
 bool Toposort(int u){
     vis[u] = 2;
     for(int i : adj[u]){
-        if(vis[u] == 2) return true; 
-        if(!vis[u]) Toposort(i);
+        if(vis[i] == 2) return true; 
+        if(!vis[i]) Toposort(i);
     }
     vis[u] = 1;
     result[--pos] = u;
